@@ -1,0 +1,31 @@
+subject,type,object,ref,quote,note
+paul,wrote_to,rome,Rom.1.7,To all that be in Rome,"Paul names himself as writer in Rom 1:1"
+paul,wrote_to,corinth,1Cor.1.2,the church of God which is at Corinth,"Paul names himself as writer in 1 Cor 1:1"
+paul,wrote_to,corinth,2Cor.1.1,the church of God which is at Corinth,"Paul names himself as writer in this verse"
+paul,wrote_to,achaia,2Cor.1.1,all the saints which are in all Achaia,"Paul names himself as writer in this verse"
+paul,wrote_to,galatia,Gal.1.2,unto the churches of Galatia,"Paul names himself as writer in Gal 1:1"
+paul,wrote_to,ephesus,Eph.1.1,to the saints which are at Ephesus,"Paul names himself as writer in this verse; some early manuscripts lack 'at Ephesus'"
+paul,wrote_to,philippi,Phil.1.1,the saints in Christ Jesus which are at Philippi,"Paul names himself as writer in this verse"
+paul,wrote_to,colossae,Col.1.2,To the saints and faithful brethren in Christ which are at Colosse,"Paul names himself as writer in Col 1:1"
+paul,wrote_to,thessalonica,1Thess.1.1,unto the church of the Thessalonians,"Paul names himself as writer in this verse; addressed to the church of the Thessalonians"
+paul,wrote_to,thessalonica,2Thess.1.1,unto the church of the Thessalonians,"Paul names himself as writer in this verse; addressed to the church of the Thessalonians"
+paul,wrote_to,timothy,1Tim.1.2,"Unto Timothy, my own son in the faith","Paul names himself as writer in 1 Tim 1:1"
+paul,wrote_to,timothy,2Tim.1.2,"To Timothy, my dearly beloved son","Paul names himself as writer in 2 Tim 1:1"
+paul,wrote_to,titus,Titus.1.4,"To Titus, mine own son after the common faith","Paul names himself as writer in Titus 1:1"
+paul,wrote_to,philemon,Phlm.1.1,unto Philemon our dearly beloved,"Paul names himself as writer in this verse"
+paul,wrote_to,apphia,Phlm.1.2,to our beloved Apphia,"Paul names himself as writer in Phlm 1:1"
+paul,wrote_to,archippus,Phlm.1.2,Archippus our fellowsoldier,"Paul names himself as writer in Phlm 1:1"
+lysias,wrote_to,felix,Acts.23.26,Claudius Lysias unto the most excellent governor Felix sendeth greeting,
+herod-agrippa-i,killed,james-son-of-zebedee,Acts.12.2,he killed James the brother of John with the sword,"'he' is Herod the king, named in 12:1"
+herod-agrippa-i,imprisoned,peter,Acts.12.4,he put him in prison,"Herod and Peter are named in 12:3"
+peter,healed,aeneas,Acts.9.34,"Aeneas, Jesus Christ maketh thee whole","Peter speaks; the healing is credited to Jesus Christ"
+peter,raised,tabitha,Acts.9.40,"Tabitha, arise",
+paul,baptized,crispus,1Cor.1.14,"I baptized none of you, but Crispus and Gaius","Paul writing; the same Crispus as Acts 18:8"
+gamaliel,taught,paul,Acts.22.3,at the feet of Gamaliel,"Paul speaking of himself ('I am verily a man which am a Jew')"
+paul,chose,silas,Acts.15.40,"Paul chose Silas, and departed",
+paul,chose,timothy,Acts.16.3,Him would Paul have to go forth with him,"'Him' is Timotheus, named in 16:1"
+matthias,replaced,judas-iscariot,Acts.1.26,the lot fell upon Matthias,"He fills the place 'from which Judas by transgression fell' (1:25)"
+paul,heard_by,felix,Acts.24.24,"he sent for Paul, and heard him concerning the faith in Christ","'he' is Felix, named earlier in the verse"
+paul,heard_by,festus,Acts.25.23,at Festus’ commandment Paul was brought forth,
+paul,heard_by,herod-agrippa-ii,Acts.26.1,"Then Agrippa said unto Paul, Thou art permitted to speak for thyself",
+paul,appealed_to,caesar,Acts.25.11,I appeal unto Caesar,"Paul speaking"

@@ -443,6 +443,14 @@ def build_core(src, out):
         db.close()
         sys.exit("curation problems:\n  " + "\n  ".join(problems))
 
+    # --- second stage: whole KJV text, typed edges, Greek lemmas, alignment, speakers
+    import layers
+    problems, layer_stats = layers.build(db, src, ROOT, read_csv)
+    if problems:
+        db.close()
+        sys.exit("layer problems:\n  " + "\n  ".join(problems))
+    meta["layer_stats"] = json.dumps(layer_stats, sort_keys=True)
+
     # --- canonical content hash, then compact
     for k, v in sorted(meta.items()):
         db.execute("INSERT INTO meta VALUES(?,?)", (k, v))

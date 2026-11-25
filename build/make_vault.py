@@ -152,7 +152,7 @@ def main():
         files[f"{FOLDER.get(k, 'Other')}/{names[eid]}.md"] = "\n".join(fm + body) + "\n"
 
     for c in range(1, 29):
-        rows = b._q("SELECT ref, verse FROM verses WHERE chapter=? ORDER BY verse", c)
+        rows = b._q("SELECT ref, verse FROM verses WHERE book='Acts' AND chapter=? ORDER BY verse", c)
         named = defaultdict(list)
         for r in rows:
             for _, eid, _ in by_ref[r["ref"]]:

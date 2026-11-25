@@ -1,0 +1,34 @@
+id,speaker,type,kind,title,start_ref,start_after,end_ref
+peter-replacing-judas,peter,spoke,speech,Peter on replacing Judas,Acts.1.16,,Acts.1.22
+peter-pentecost,peter,preached,sermon,Peter's sermon at Pentecost,Acts.2.14,said unto them,Acts.2.36
+peter-solomons-porch,peter,preached,sermon,Peter's sermon in Solomon's porch,Acts.3.12,he answered unto the people,Acts.3.26
+peter-before-council,peter,defended,defense,Peter before the council,Acts.4.8,said unto them,Acts.4.12
+peter-obey-god,peter,defended,defense,We ought to obey God rather than men,Acts.5.29,answered and said,Acts.5.32
+gamaliel-counsel,gamaliel,spoke,speech,Gamaliel's counsel,Acts.5.35,And said unto them,Acts.5.39
+stephen-defense,stephen,defended,defense,Stephen's defence,Acts.7.2,And he said,Acts.7.53
+peter-cornelius,peter,preached,sermon,Peter's sermon to Cornelius's household,Acts.10.34,and said,Acts.10.43
+peter-report-jerusalem,peter,spoke,speech,Peter explains the Gentile mission,Acts.11.5,,Acts.11.17
+paul-pisidian-antioch,paul,preached,sermon,Paul's sermon at Antioch in Pisidia,Acts.13.16,with his hand said,Acts.13.41
+paul-lystra,paul,spoke,speech,Paul and Barnabas at Lystra,Acts.14.15,And saying,Acts.14.17
+peter-council,peter,spoke,speech,Peter at the Jerusalem council,Acts.15.7,said unto them,Acts.15.11
+james-council,james-brother-of-jesus,spoke,speech,James's judgment at the council,Acts.15.13,"James answered, saying",Acts.15.21
+paul-areopagus,paul,preached,sermon,Paul at the Areopagus,Acts.17.22,and said,Acts.17.31
+demetrius-riot,demetrius,spoke,speech,Demetrius stirs the silversmiths,Acts.19.25,and said,Acts.19.27
+paul-miletus,paul,preached,sermon,Paul's farewell to the Ephesian elders,Acts.20.18,he said unto them,Acts.20.35
+paul-temple-steps,paul,defended,defense,Paul's defence on the temple steps,Acts.22.1,,Acts.22.21
+tertullus-accusation,tertullus,spoke,speech,Tertullus accuses Paul,Acts.24.2,saying,Acts.24.8
+paul-before-felix,paul,defended,defense,Paul's defence before Felix,Acts.24.10,answered,Acts.24.21
+festus-to-agrippa,festus,spoke,speech,Festus lays Paul's case before Agrippa,Acts.25.14,saying,Acts.25.21
+paul-before-agrippa,paul,defended,defense,Paul's defence before Agrippa,Acts.26.2,,Acts.26.23
+paul-in-the-storm,paul,spoke,speech,Paul encourages the crew,Acts.27.21,and said,Acts.27.26
+paul-rome-jews,paul,spoke,speech,Paul to the Jewish leaders in Rome,Acts.28.17,he said unto them,Acts.28.20
+jesus-nicodemus,jesus,spoke,dialogue,Jesus and Nicodemus,John.3.3,,John.3.21
+jesus-samaritan-woman,jesus,spoke,dialogue,Jesus and the woman of Samaria,John.4.7,,John.4.26
+jesus-son-and-father,jesus,preached,discourse,The Son and the Father,John.5.19,,John.5.47
+jesus-bread-of-life,jesus,preached,sermon,The bread of life,John.6.26,,John.6.58
+jesus-at-tabernacles,jesus,preached,sermon,Teaching at the feast of tabernacles,John.7.16,,John.7.24
+jesus-light-of-the-world,jesus,preached,sermon,The light of the world,John.8.12,,John.8.58
+jesus-good-shepherd,jesus,preached,sermon,The good shepherd,John.10.1,,John.10.18
+jesus-hour-has-come,jesus,preached,sermon,The hour is come,John.12.23,,John.12.36
+jesus-farewell,jesus,preached,discourse,The farewell discourse,John.13.31,,John.16.33
+jesus-prayer-john-17,jesus,prayed,prayer,Jesus's prayer for his disciples,John.17.1,,John.17.26

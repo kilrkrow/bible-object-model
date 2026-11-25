@@ -20,7 +20,7 @@ NOT_NAMES = {
 
 def scan(db_path):
     db = sqlite3.connect(db_path)
-    verses = db.execute("SELECT ref, text FROM verses WHERE translation='KJV' ORDER BY chapter, verse").fetchall()
+    verses = db.execute("SELECT ref, text FROM verses WHERE translation='KJV' AND book='Acts' ORDER BY chapter, verse").fetchall()
     alltext = " ".join(t for _, t in verses)
     lower = set(re.findall(r"\b[a-z]+\b", alltext))
     surf = collections.defaultdict(list)

@@ -1,0 +1,11 @@
+id,kind,label,forms,brief,note
+nicodemus,person,Nicodemus,Nicodemus,"Pharisee and ruler of the Jews who came to Jesus by night","speaks in John; not named in Acts"
+nathanael,person,Nathanael,Nathanael,"Disciple from Cana whom Philip brought to Jesus","speaks in John; not named in Acts"
+martha,person,Martha,Martha,"Sister of Mary and Lazarus of Bethany","speaks in John; not named in Acts"
+mary-of-bethany,person,Mary of Bethany,Mary,"Sister of Martha and Lazarus","speaks in John; not named in Acts"
+mary-magdalene,person,Mary Magdalene,Mary Magdalene|Mary,"Woman from Magdala, first to see the risen Jesus","speaks in John; not named in Acts"
+colossae,place,Colossae,Colosse,"City in Phrygia; Paul wrote to the church there","named in Col 1:2; not in Acts"
+titus,person,Titus,Titus,"Gentile co-worker of Paul","named in Paul's letters; not in Acts"
+philemon,person,Philemon,Philemon,"Christian at Colossae to whom Paul wrote","named in Phlm 1:1; not in Acts"
+apphia,person,Apphia,Apphia,"Christian woman greeted in Philemon","named in Phlm 1:2"
+archippus,person,Archippus,Archippus,"Christian greeted in Philemon and Colossians","named in Phlm 1:2"
