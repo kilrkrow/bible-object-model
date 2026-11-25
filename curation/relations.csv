@@ -1,0 +1,17 @@
+subject,predicate,object,ref,quote,note
+abraham,parent_of,isaac,Acts.7.8,Abraham begat Isaac,
+isaac,parent_of,jacob,Acts.7.8,Isaac begat Jacob,
+jacob,parent_of,joseph-son-of-jacob,Acts.7.14,called his father Jacob,
+kish,parent_of,saul,Acts.13.21,Saul the son of Cis,
+saul,descendant_of,benjamin,Acts.13.21,a man of the tribe of Benjamin,
+jesse,parent_of,david,Acts.13.22,David the son of Jesse,
+jesus,descendant_of,david,Acts.13.23,Of this man’s seed hath God according to his promise raised unto Israel a Saviour,'this man' is David (Acts 13:22)
+mary-mother-of-jesus,parent_of,jesus,Acts.1.14,Mary the mother of Jesus,
+james-son-of-zebedee,sibling_of,john-the-apostle,Acts.12.2,James the brother of John,
+alphaeus,parent_of,james-son-of-alphaeus,Acts.1.13,James the son of Alphaeus,
+judas-the-apostle,kin_of,james-father-of-judas,Acts.1.13,Judas the brother of James,"The KJV says 'brother'; the Greek reads only 'Judas of James', usually taken as 'son of'. Kept as unspecified kin."
+mary-mother-of-john-mark,parent_of,john-mark,Acts.12.12,"Mary the mother of John, whose surname was Mark",
+father-of-timothy,parent_of,timothy,Acts.16.1,his father was a Greek,
+ananias-husband-of-sapphira,spouse_of,sapphira,Acts.5.1,"Ananias, with Sapphira his wife",
+aquila,spouse_of,priscilla,Acts.18.2,with his wife Priscilla,
+felix,spouse_of,drusilla,Acts.24.24,Felix came with his wife Drusilla,

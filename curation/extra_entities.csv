@@ -1,0 +1,5 @@
+id,kind,name,label,description,forms,refs
+caesar,title,Caesar,Caesar (the emperor),Title of the Roman emperor; in Acts it means the reigning emperor,Caesar,scan
+castor-and-pollux,deity,Castor and Pollux,Castor and Pollux,The twin gods on the ship's figurehead (Acts 28:11),Castor and Pollux,scan
+euroclydon,other,Euroclydon,Euroclydon (the storm wind),The north-east gale in Acts 27:14,Euroclydon,scan
+book-of-psalms,work,Psalms,The book of Psalms,The book of Psalms as quoted in Acts,Psalms|psalm,scan

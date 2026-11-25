@@ -1,0 +1,73 @@
+{
+  "kjv": {
+    "name": "King James Version text (JSON by Arul John)",
+    "repo": "https://github.com/aruljohn/Bible-kjv",
+    "commit": "a9aa4e55afbb3e095f57e4b14cd1f22c5ee8d7c9",
+    "license": "Text: public domain (Crown rights apply in the UK). JSON packaging: MIT.",
+    "layer": "core",
+    "files": {
+      "Acts.json": "f05ff6ef777c1b82ca5e87ae250d846b3a6a1fc54971ee06bdc86d698c9b2790"
+    }
+  },
+  "tipnr": {
+    "name": "STEPBible TIPNR (Translators Individualised Proper Names with all References), Tyndale House Cambridge",
+    "repo": "https://github.com/STEPBible/STEPBible-Data",
+    "commit": "5de0a47f35f0fc13dfe1430d104e5db8a4285f9c",
+    "license": "CC BY 4.0",
+    "layer": "core",
+    "sparse": [
+      "/Proper Nouns/*"
+    ],
+    "files": {
+      "Proper Nouns/TIPNR - Translators Individualised Proper Names with all References - STEPBible.org CC BY.txt": "d595b9163d32a400bb0ef96b27a6de58335a63da840b82531fe9f5e1d16a318c"
+    }
+  },
+  "openbible": {
+    "name": "OpenBible.info Bible Geocoding Data",
+    "repo": "https://github.com/openbibleinfo/Bible-Geocoding-Data",
+    "commit": "7eb18a5ee62f27b9b93bd6689ea272d76dd23b8f",
+    "license": "CC BY 4.0",
+    "layer": "core",
+    "sparse": [
+      "/data/ancient.jsonl",
+      "/license.txt"
+    ],
+    "files": {
+      "data/ancient.jsonl": "b8187aa4737e8517ccc090f765d2be11da4c548cd2a59d3cdcb62e952cb8c0f2"
+    }
+  },
+  "theographic": {
+    "name": "Theographic Bible Metadata (Robert Rouse)",
+    "repo": "https://github.com/robertrouse/theographic-bible-metadata",
+    "commit": "b75c2689bbc396def2b22b4abf4e756ad2732742",
+    "license": "CC BY-SA 4.0",
+    "layer": "share-alike (optional, separate file)",
+    "sparse": [
+      "/json/people.json",
+      "/json/places.json",
+      "/json/verses.json",
+      "/json/events.json",
+      "/LICENSE"
+    ],
+    "files": {
+      "json/people.json": "09b0a77f89c08196f5326bdad70d4bcbb1b9c7b0a770d521de470d24c63b9d83",
+      "json/places.json": "cea8f1b960bc0d643b9e574cf888a3061c5e6cd628b29164770cbdf71ca304c6",
+      "json/verses.json": "f4dc7cadeabf72ffa83499394cdfb9058e274441ecf3b577c69c550f8cdc2c05",
+      "json/events.json": "e21729678280c55455603a47df816656be9db75c5870c61fede0eb054f4c6c26"
+    }
+  },
+  "naturalearth": {
+    "name": "Natural Earth 1:50m land outlines (map background only)",
+    "repo": "https://github.com/nvkelso/natural-earth-vector",
+    "commit": "ca96624a56bd078437bca8184e78163e5039ad19",
+    "license": "public domain",
+    "layer": "maps only (not in the data files)",
+    "sparse": [
+      "/geojson/ne_50m_land.geojson",
+      "/LICENSE.md"
+    ],
+    "files": {
+      "geojson/ne_50m_land.geojson": "e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+id,ref,action,value,note
+asia,Acts.24.19,move,Acts.24.18,'certain Jews from Asia' is in KJV 24:18; TIPNR follows the Greek verse division
+jerusalem,Acts.4.5,move,Acts.4.6,KJV puts 'at Jerusalem' in 4:6; TIPNR follows the Greek verse division
+egypt,Acts.7.18,drop,,KJV (Textus Receptus) has no 'over Egypt' in 7:18
+jesus,Acts.16.7,drop,,KJV (Textus Receptus) reads 'the Spirit' without 'of Jesus'
+pyrrhus,Acts.20.4,drop,,KJV (Textus Receptus) omits 'son of Pyrrhus'
+husband-of-mary,Acts.12.12,drop,,TIPNR links an unnamed husband of Mary; the KJV verse names no husband
+rome,Acts.16.12,drop,,'a colony' implies Rome but does not name it; kept out so every mention is a name in the verse
+asiarch,Acts.19.31,surface,chief of Asia,KJV renders the Asiarchs as 'certain of the chief of Asia'
+father-of-timothy,Acts.16.1,surface,his father,unnamed father of Timothy
+lord,Acts.7.48,surface,most High,KJV: 'the most High'
+passover,Acts.12.4,surface,Easter,KJV renders pascha as 'Easter' here
+paul,Acts.25.8,surface,he,KJV has a pronoun where the Greek names Paul
+paul,Acts.26.25,surface,he,KJV has a pronoun where the Greek names Paul
+sabbath,Acts.20.7,surface,week,KJV: 'the first day of the week' (Greek sabbaton)
+gentile,Acts.4.25,drop,,KJV 'the heathen' (quoting Psalm 2) is a common noun here
+judah,Acts.2.14,retarget,judea,KJV 'Ye men of Judaea' names the region
+solomon-s-portico,Acts.3.11,surface,porch that is called Solomon’s,KJV: 'in the porch that is called Solomon's'
+abraham,Acts.7.8,add,,KJV names Abraham here; the Greek has only 'he begat'
+jerusalem,Acts.18.21,add,,KJV (Textus Receptus) adds 'I must by all means keep this feast that cometh in Jerusalem'
+jesus,Acts.2.30,add,,KJV (Textus Receptus) adds 'he would raise up Christ'
+jesus,Acts.3.26,add,,KJV (Textus Receptus) reads 'his Son Jesus'
+jesus,Acts.4.26,add,,KJV 'his Christ' (quoting Psalm 2); TIPNR treats christos here as a title
+jesus,Acts.8.37,add,,Acts 8:37 is in the KJV (Textus Receptus) but not in most modern texts
+jesus,Acts.9.29,add,,KJV (Textus Receptus) reads 'the Lord Jesus'
+jesus,Acts.19.10,add,,KJV (Textus Receptus) reads 'the word of the Lord Jesus'
+zeus,Acts.19.35,add,,KJV 'the image which fell down from Jupiter' renders one Greek word (diopetes)

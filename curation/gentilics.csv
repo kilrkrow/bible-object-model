@@ -1,0 +1,33 @@
+form,group_id,label,parent
+Jew,jews,Jews,judea
+Jewess,jews,Jews,judea
+Greek,greeks,Greeks,greece
+Grecian,grecians,Grecians (Greek-speaking Jews),
+Gentile,gentiles,Gentiles,
+Roman,romans,Romans,rome
+Hebrew,hebrews,Hebrews,
+Egyptian,egyptians,Egyptians,egypt
+Galilaean,galileans,Galileans,galilee
+Galilean,galileans,Galileans,galilee
+Chaldaean,chaldeans,Chaldeans,chaldea
+Christian,christians,Christians,
+Alexandrian,alexandrians,Alexandrians,alexandria
+Arabian,arabians,Arabians,arabia
+Areopagite,areopagites,Areopagites (members of the Areopagus council),areopagus
+Athenian,athenians,Athenians,athens
+Corinthian,corinthians,Corinthians,corinth
+Cretes,cretans,Cretans,crete
+Cyrenian,cyrenians,Cyrenians,cyrene
+Elamite,elamites,Elamites,elam
+Ephesian,ephesians,Ephesians,ephesus
+Ethiopian,ethiopians,Ethiopians,
+Italian,italians,Italians,italy
+Levite,levites,Levites,
+Macedonian,macedonians,Macedonians,macedonia
+Medes,medes,Medes,media
+Nazarene,nazarenes,Nazarenes,nazareth
+Parthian,parthians,Parthians,
+Samaritan,samaritans,Samaritans,samaria
+Thessalonian,thessalonians,Thessalonians,thessalonica
+Asian,asians,People of Asia,asia
+Antiochian,antiochians,People of Antioch,antioch-of-syria
