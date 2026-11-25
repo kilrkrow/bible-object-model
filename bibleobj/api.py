@@ -1,4 +1,4 @@
-"""Read-only object API over the Acts data file.
+"""Read-only object API over the core data file (Acts in depth, the whole KJV as text).
 
     from bibleobj import Bible
     kjv = Bible.open()                      # dist/acts-core.sqlite (+ theographic layer if present)
@@ -8,6 +8,8 @@
     kjv.journey("paul")
     kjv.contemporaries("paul")
     kjv.place_history("antioch-of-syria")
+    kjv.paul.wrote_to - kjv.paul.visited    # typed relationships as sets (see graph.py)
+    kjv.words("John 21:15")                 # KJV words with their Greek lemmas
 
 Every result is plain JSON-ready data. Every fact that comes from the text carries the
 verse it came from. Dates are never returned bare: they only appear inside a Claim,
@@ -16,13 +18,14 @@ whose views each carry a label and a source (see claims.py).
 import pathlib, re, sqlite3
 from collections import defaultdict, deque
 
+from .books import BOOK_ALIASES
 from .claims import make_claim, guard
+from .graph import GraphMixin, ref_order
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DEFAULT_DB = ROOT / "dist" / "acts-core.sqlite"
 DEFAULT_LAYER = ROOT / "dist" / "acts-theographic.sqlite"
 
-BOOK_ALIASES = {"acts": "Acts", "act": "Acts", "ac": "Acts"}
 PREDICATE_TEXT = {
     "parent_of": ("parent of", "child of"),
     "descendant_of": ("descendant of", "ancestor of"),
@@ -44,14 +47,19 @@ def parse_ref(s):
         raise ValueError(f"not a reference: {s!r} (try 'Acts 13:1' or 'Acts.13.1-3')")
     book = BOOK_ALIASES.get(m.group(1).lower().replace(" ", ""))
     if not book:
-        raise ValueError(f"only Acts is in this first pass, not {m.group(1)!r}")
+        raise ValueError(f"unknown book {m.group(1)!r} (try 'Acts', 'John', '1 Cor' or an OSIS code)")
     c = int(m.group(2))
     v1 = int(m.group(3)) if m.group(3) else None
     v2 = int(m.group(4)) if m.group(4) else v1
     return book, c, v1, v2
 
 
-class Bible:
+def _ro_uri(path):
+    # Path.as_uri() gives file:///C:/... on Windows and file:///home/... elsewhere
+    return pathlib.Path(path).resolve().as_uri() + "?mode=ro"
+
+
+class Bible(GraphMixin):
     def __init__(self, db, layer=None):
         self.db = db
         self.layer = layer
@@ -60,11 +68,11 @@ class Bible:
     @classmethod
     def open(cls, path=None, layer=None, use_layer=True):
         path = pathlib.Path(path or DEFAULT_DB)
-        db = sqlite3.connect(f"file:{path}?mode=ro", uri=True, check_same_thread=False)
+        db = sqlite3.connect(_ro_uri(path), uri=True, check_same_thread=False)
         lay = None
         lp = pathlib.Path(layer or DEFAULT_LAYER)
         if use_layer and lp.exists():
-            lay = sqlite3.connect(f"file:{lp}?mode=ro", uri=True, check_same_thread=False)
+            lay = sqlite3.connect(_ro_uri(lp), uri=True, check_same_thread=False)
             lay.row_factory = sqlite3.Row
         return cls(db, lay)
 
@@ -84,8 +92,7 @@ class Bible:
 
     @staticmethod
     def _order(ref):
-        _, c, v = ref.split(".")
-        return int(c), int(v)
+        return ref_order(ref)
 
     def _brief(self, eid):
         e = self._entity_row(eid)

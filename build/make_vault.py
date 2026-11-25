@@ -11,13 +11,13 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from bibleobj import Bible  # noqa: E402
 
-FOLDER = {"person": "People", "place": "Places", "group": "Groups"}
+FOLDER = {"person": "People", "place": "Places", "group": "Groups", "speech": "Speeches"}
 BAD = re.compile(r'[\\/:*?"<>|#^\[\]]')
 
 
 def nice(ref):
-    _, c, v = ref.split(".")
-    return f"Acts {c}:{v}"
+    bk, c, v = ref.split(".")
+    return f"{bk} {c}:{v}"
 
 
 def order(ref):
@@ -127,6 +127,23 @@ def main():
                 body.append("")
             body += ["## Born and died", "", "Acts gives no year for either. Any date would be a chronology's view, "
                      "kept in the separate share-alike layer.", ""]
+        if k == "speech":
+            sp = b.speeches()
+            sp = next(x for x in sp if x["id"] == eid)
+            body += [f"Given by {L(sp['speaker'])}, {nice(sp['start_ref'])} to {nice(sp['end_ref'])} ({sp['kind']}).", ""]
+            rows = b._q('SELECT u.ref, u.start, u."end", v.text FROM utterances u JOIN verses v ON v.ref=u.ref '
+                        "WHERE u.speech_id=?", eid)
+            rows.sort(key=lambda r: (b._order(r["ref"]), r["start"]))
+            body += ["## The words", ""] + [f"**{nice(r['ref'])}** {r['text'][r['start']:r['end']]}" for r in rows] + [""]
+        typed = [x for x in b.edges(subject=eid) + b.edges(object=eid)
+                 if x["type"] not in ("visited",) and not (k == "speech")]
+        if typed:
+            body += ["## Relationships", ""]
+            for x in sorted(typed, key=lambda x: (x["type"], b._order(x["ref"]))):
+                other = x["object"] if x["subject"] == eid else x["subject"]
+                verb = x["type"].replace("_", " ") if x["subject"] == eid else f"{x['type'].replace('_', ' ')} (by)"
+                body.append(f"- {verb} {L(other)}: {nice(x['ref'])}, \"{x['quote']}\"")
+            body.append("")
         if k == "place":
             if e.get("sites"):
                 body += ["## Where it was", ""]

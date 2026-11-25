@@ -55,6 +55,13 @@ Credit line: "Chronology views from Theographic Bible Metadata by Robert Rouse, 
 The interactive map `dist/maps/paul-journeys.html` loads Leaflet (BSD-2-Clause) from cdnjs and map tiles from
 OpenStreetMap (data ODbL, "© OpenStreetMap contributors", shown on the map) when it is opened.
 
+## Graph viewer only
+
+`dist/graph/index.html` inlines vis-network 10.1.5 (https://github.com/visjs/vis-network), dual licensed
+Apache-2.0 or MIT, copyright Almende B.V. and the visjs contributors. The copy used is
+`build/vendor/vis-network.min.js` (SHA-256 `b427322a…ddf2c`) with its MIT notice in
+`build/vendor/vis-network.LICENSE-MIT`; the notice also stays in the file's header.
+
 ## This project's own code
 
 The scripts in `build/`, `bibleobj/`, `mcp_server/` and `tests/` have no licence chosen yet. That is Guy's call.

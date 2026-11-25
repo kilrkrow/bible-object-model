@@ -10,7 +10,7 @@ Layers written here
   alignments             each KJV content word linked to the Greek word it translates (machine-drafted)
   speeches, utterances   who is speaking which characters of which verse, with a basis for each span
 """
-import json, math, re, sys
+import json, math, re, sys, unicodedata
 from collections import Counter, defaultdict
 
 from redletter import parse_osis, carry_spans
@@ -18,23 +18,8 @@ from redletter import parse_osis, carry_spans
 TOKEN_BOOKS = ("John", "Acts")
 WORD_RE = re.compile(r"[A-Za-z]+(?:['’-][A-Za-z]+)*")
 
-# file name in aruljohn/Bible-kjv -> (OSIS code, testament)
-BOOKS = [
-    ("Genesis", "Gen"), ("Exodus", "Exod"), ("Leviticus", "Lev"), ("Numbers", "Num"), ("Deuteronomy", "Deut"),
-    ("Joshua", "Josh"), ("Judges", "Judg"), ("Ruth", "Ruth"), ("1Samuel", "1Sam"), ("2Samuel", "2Sam"),
-    ("1Kings", "1Kgs"), ("2Kings", "2Kgs"), ("1Chronicles", "1Chr"), ("2Chronicles", "2Chr"), ("Ezra", "Ezra"),
-    ("Nehemiah", "Neh"), ("Esther", "Esth"), ("Job", "Job"), ("Psalms", "Ps"), ("Proverbs", "Prov"),
-    ("Ecclesiastes", "Eccl"), ("SongofSolomon", "Song"), ("Isaiah", "Isa"), ("Jeremiah", "Jer"),
-    ("Lamentations", "Lam"), ("Ezekiel", "Ezek"), ("Daniel", "Dan"), ("Hosea", "Hos"), ("Joel", "Joel"),
-    ("Amos", "Amos"), ("Obadiah", "Obad"), ("Jonah", "Jonah"), ("Micah", "Mic"), ("Nahum", "Nah"),
-    ("Habakkuk", "Hab"), ("Zephaniah", "Zeph"), ("Haggai", "Hag"), ("Zechariah", "Zech"), ("Malachi", "Mal"),
-    ("Matthew", "Matt"), ("Mark", "Mark"), ("Luke", "Luke"), ("John", "John"), ("Acts", "Acts"),
-    ("Romans", "Rom"), ("1Corinthians", "1Cor"), ("2Corinthians", "2Cor"), ("Galatians", "Gal"),
-    ("Ephesians", "Eph"), ("Philippians", "Phil"), ("Colossians", "Col"), ("1Thessalonians", "1Thess"),
-    ("2Thessalonians", "2Thess"), ("1Timothy", "1Tim"), ("2Timothy", "2Tim"), ("Titus", "Titus"),
-    ("Philemon", "Phlm"), ("Hebrews", "Heb"), ("James", "Jas"), ("1Peter", "1Pet"), ("2Peter", "2Pet"),
-    ("1John", "1John"), ("2John", "2John"), ("3John", "3John"), ("Jude", "Jude"), ("Revelation", "Rev"),
-]
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent.parent))
+from bibleobj.books import BOOKS  # noqa: E402  (one list of the 66 books for the build and the library)
 TAGNT_BOOK = dict(zip("Mat Mrk Luk Jhn Act Rom 1Co 2Co Gal Eph Php Col 1Th 2Th 1Ti 2Ti Tit Phm Heb Jas 1Pe 2Pe 1Jn 2Jn 3Jn Jud Rev".split(),
                       [o for _, o in BOOKS[39:]]))
 
@@ -125,8 +110,9 @@ def load_tagnt(src):
             base = re.match(r"[GH]\d{4}", dstrong)
             if not base:
                 continue
-            verses[ref].append({"word": word.strip("·,.;:¶"), "translit": translit or "", "strong": base.group(0),
-                                "ext": dstrong, "morph": morph, "lemma": lemma, "gloss": gloss, "english": english})
+            nfc = lambda x: unicodedata.normalize("NFC", x or "")  # STEPBible uses oxia (U+1F71); NFC makes it tonos
+            verses[ref].append({"word": nfc(word.strip("·,.;:¶")), "translit": nfc(translit), "strong": base.group(0),
+                                "ext": dstrong, "morph": morph, "lemma": nfc(lemma), "gloss": gloss, "english": english})
     return verses
 
 
@@ -140,7 +126,8 @@ def load_lexicon(src):
                 continue
             base = col[0][:5]
             if base not in lex or col[0] == base:
-                lex[base] = {"lemma": col[3], "translit": col[4], "gloss": col[6]}
+                lex[base] = {"lemma": unicodedata.normalize("NFC", col[3]),
+                             "translit": unicodedata.normalize("NFC", col[4]), "gloss": col[6]}
     return lex
 
 
@@ -202,12 +189,12 @@ def align(kjv_by_ref, greek, iters=6, alpha=4.0):
 
 
 # ------------------------------------------------------------------------- speakers
-INTRO = re.compile(r"(?<!\bhad )(?<!\bthus )(?<!\bwhich he )(?<!\bwhich I )\b(?:answered and said|said|saith|saying|answered|cried|spake|asked|sayest)\b"
+INTRO = re.compile(r"(?<!\bhad )(?<!\bthus )(?<!\bwhich he )(?<!\bwhich I )\b(?:answered and said|said|saith|saying|answered|cried|spake|asked|sayest|say(?= unto))\b"
                    r"(?: unto (?:him|her|them|me|us|you|thee|[A-Z][a-z]+)(?: [a-z]+)?)?,\s+")
 PRON = {"he", "she", "they", "it", "one", "another", "others", "some", "we", "i", "ye"}
 
 
-def name_index(db, extra_forms):
+def name_index(db, extra_forms, overrides=(), book="*"):
     """Name forms that speakers go by: every surface the mention layer found in Acts, plus the new John names.
 
     Aliases alone are too loose (TIPNR lists "God" among Jacob's forms). When a surface belongs to several
@@ -225,6 +212,15 @@ def name_index(db, extra_forms):
     for form, c in by_form.items():
         (top, n), total = c.most_common(1)[0], sum(c.values())
         idx[form] = {top} if n >= 0.8 * total else set(c)
+    # curation/speaker_names.csv: a name that means one person within a book, or that the pass must not use
+    for r in overrides:
+        if r["book"] in ("*", book):
+            if r["entity_id"]:
+                idx[r["form"]] = {r["entity_id"]}
+            elif r["form"] in by_form:
+                idx[r["form"]] = set(by_form[r["form"]]) | {"(left unresolved)"}
+            else:
+                idx[r["form"]] = {"(left unresolved)"}
     return idx
 
 
@@ -237,7 +233,7 @@ def resolve_speaker(before, idx):
             pre = clause[:m.start()]
             if re.search(r"\b(?:of|to|unto|upon|with|by|in|for)\s+(?:the\s+)?(?:[A-Z]\w*\s+)?$", pre):
                 continue  # "the mother of Jesus", "in the name of the LORD Jesus"
-            if re.search(r"\b(?:whose|whom|which)\s+(?:\w+\s+)?$", pre):
+            if re.search(r"\b(?:whose|whom|which|where)\s+(?:\w+\s+)?$", pre):
                 continue  # inside a relative clause: "his kinsman whose ear Peter cut off"
             if re.match(r"[’']", clause[m.end():m.end() + 1]):
                 continue  # "Jesus’ breast", "Paul’s girdle"
@@ -249,6 +245,8 @@ def resolve_speaker(before, idx):
         ids = best[2]
         if len(ids) == 1:
             return next(iter(ids)), None
+        if "(left unresolved)" in ids:
+            return None, f"left unresolved: {best[1]}"
         return None, "ambiguous: " + "|".join(sorted(ids))
     words = clause.strip().split()
     if any(w.lower().strip(",") in PRON for w in words[-5:]):
@@ -269,6 +267,8 @@ def draft_utterances(vtext, refs, idx, taken):
             end = ms[k + 1].start() if k + 1 < len(ms) else len(text)
             # end at the narrator's next sentence if one obviously starts ("And he ...")
             nxt = re.search(r"\. (?:And|Then|But|So) (?:he|she|they|when|" + names_re + r")\b", text[start:end])
+            if not nxt:  # "... They went forth, and entered into a ship" (John 21:3)
+                nxt = re.search(r"\. (?:They|He|She) (?:went|came|saw|took|departed|entered|arose|[a-z]+ed)\b", text[start:end])
             if nxt:
                 end = start + nxt.start() + 1
             # back the end up to the last sentence mark before the next intro's narrator words
@@ -276,8 +276,8 @@ def draft_utterances(vtext, refs, idx, taken):
                 seg = text[start:end]
                 cut = max(seg.rfind(". "), seg.rfind("? "), seg.rfind("! "))
                 end = start + cut + 1 if cut > 0 else end
-            if end - start < 3:
-                continue
+            if end - start < 3 or re.fullmatch(r"\(.*\)", text[start:end].strip()):
+                continue  # a narrator's aside in brackets is not speech (Acts 1:15)
             if any(a < end and start < b for a, b in taken.get(ref, [])):
                 continue
             who, why = resolve_speaker(text[:m.start()], idx)
@@ -427,7 +427,19 @@ def build(db, src, root, read_csv):
                 start = i + len(r["start_after"])
                 start += len(text[start:]) - len(text[start:].lstrip(" ,:"))
             end = len(text)
-            utter[(ref, start)] = [end, who, "curated speech", sid, "", "curation"]
+            # a speaker who quotes Jesus (Peter in Acts 11:16): the quoted words stay Jesus's, marked as quoted
+            cur = start
+            for a, b in sorted(x for x in taken.get(ref, []) if start <= x[0] < end):
+                if (ref, a) in utter and utter[(ref, a)][1] == "jesus":
+                    utter[(ref, a)][4] = f"quoted by {who} in {sid}"
+                if a > cur:
+                    seg = text[cur:a].rstrip(" ,:;")
+                    if len(seg.strip()) > 1:
+                        utter[(ref, cur)] = [cur + len(seg), who, "curated speech", sid, "", "curation"]
+                cur = max(cur, b)
+            if end - cur > 1 and text[cur:end].strip(" ,.:;"):
+                lead = len(text[cur:end]) - len(text[cur:end].lstrip(" ,:;"))
+                utter[(ref, cur + lead)] = [end, who, "curated speech", sid, "", "curation"]
             taken[ref].append((start, end))
             if first_quote is None:
                 first_quote = (ref, text[start:end])
@@ -437,9 +449,16 @@ def build(db, src, root, read_csv):
             add_edge(who, r["type"], sid, ref, q, "speech boundaries checked by hand", "curation")
 
     # --- drafted speakers for the rest of the direct speech in Acts and John
-    idx = name_index(db, extra_forms)
+    overrides = read_csv(root / "curation/speaker_names.csv")
+    for r in overrides:
+        if r["entity_id"] and r["entity_id"] not in ents:
+            problems.append(f"speaker_names: unknown id {r['entity_id']}")
     refs = sorted((x for x in vtext if x.split(".")[0] in TOKEN_BOOKS), key=lambda x: order[x])
-    for ref, a, b, who, why in draft_utterances(vtext, refs, idx, taken):
+    drafted = []
+    for book in TOKEN_BOOKS:
+        idx = name_index(db, extra_forms, overrides, book)
+        drafted += draft_utterances(vtext, [x for x in refs if x.startswith(book + ".")], idx, taken)
+    for ref, a, b, who, why in drafted:
         seg = vtext[ref][a:b]
         b = a + len(seg.rstrip())
         if (ref, a) not in utter:
@@ -455,7 +474,7 @@ def build(db, src, root, read_csv):
         CREATE VIEW relations AS SELECT subject, type AS predicate, object, ref, quote, note, source FROM edges
           WHERE type IN {FAMILY!r};
         CREATE VIEW itinerary AS SELECT subject AS person_id, seq, object AS place_id, ref,
-          json_extract(attrs, '$.leg') AS leg, quote, source FROM edges WHERE type='visited';
+          json_extract(attrs, '$.leg') AS leg, quote, source FROM edges WHERE type='visited' AND seq IS NOT NULL;
     """)
 
     # --- tokens, Greek, lexicon, alignment for Acts and John

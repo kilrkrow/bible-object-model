@@ -5,6 +5,6 @@
 import pathlib, subprocess, sys
 
 HERE = pathlib.Path(__file__).resolve().parent
-for step in ("fetch_sources.py", "build.py", "make_map.py", "make_vault.py"):
+for step in ("fetch_sources.py", "build.py", "make_map.py", "make_vault.py", "make_graph.py"):
     print(f"== {step}", flush=True)
     subprocess.run([sys.executable, str(HERE / step)], check=True)
