@@ -21,8 +21,8 @@ function Run([string]$exe, [string[]]$argv) {
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     throw 'Git was not found. Install Git for Windows (https://git-scm.com/download/win), open a new PowerShell window, and run this again.'
 }
-$base = if (Get-Command py -ErrorAction SilentlyContinue) { @('py', '-3') }
-        elseif (Get-Command python -ErrorAction SilentlyContinue) { @('python') }
+[string[]]$base = if (Get-Command py -ErrorAction SilentlyContinue) { @('py', '-3') }
+        elseif (Get-Command python -ErrorAction SilentlyContinue) { ,@('python') }
         else { throw 'Python was not found. Install Python 3.10 or newer from https://www.python.org/downloads/ (tick "Add python.exe to PATH"), open a new PowerShell window, and run this again.' }
 $pyExe = $base[0]; $pyArgs = @($base | Select-Object -Skip 1)
 & $pyExe @pyArgs -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)'
