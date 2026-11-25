@@ -232,10 +232,11 @@ def main():
                         {"query": "path:Places", "color": {"a": 1, "rgb": rgb("#059669")}},
                         {"query": "path:Groups", "color": {"a": 1, "rgb": rgb("#d97706")}},
                         {"query": "path:Chapters", "color": {"a": 1, "rgb": rgb("#9ca3af")}},
+                        {"query": "path:Speeches", "color": {"a": 1, "rgb": rgb("#be185d")}},
                         {"query": "path:Other", "color": {"a": 1, "rgb": rgb("#7c3aed")}}],
         "showArrow": False, "textFadeMultiplier": 0, "nodeSizeMultiplier": 1, "lineSizeMultiplier": 0.6,
-        "centerStrength": 0.5, "repelStrength": 12, "linkStrength": 1, "linkDistance": 120}, indent=2) + "\n")
-    (ob / "app.json").write_text(json.dumps({"alwaysUpdateLinks": True}, indent=2) + "\n")
+        "centerStrength": 0.5, "repelStrength": 12, "linkStrength": 1, "linkDistance": 120}, indent=2) + "\n", encoding="utf-8")
+    (ob / "app.json").write_text(json.dumps({"alwaysUpdateLinks": True}, indent=2) + "\n", encoding="utf-8")
     print(f"vault: {out} ({len(files)} notes)")
 
 

@@ -14,10 +14,10 @@ def norm(s):
 
 
 def compare(core=ROOT / "dist/acts-core.sqlite", src=ROOT / "sources/theographic/json"):
-    people = {p["id"]: p["fields"] for p in json.loads((src / "people.json").read_text())}
-    places = {p["id"]: p["fields"] for p in json.loads((src / "places.json").read_text())}
+    people = {p["id"]: p["fields"] for p in json.loads((src / "people.json").read_text(encoding="utf-8"))}
+    places = {p["id"]: p["fields"] for p in json.loads((src / "places.json").read_text(encoding="utf-8"))}
     refs = collections.defaultdict(set)
-    for v in json.loads((src / "verses.json").read_text()):
+    for v in json.loads((src / "verses.json").read_text(encoding="utf-8")):
         f = v["fields"]
         if f["osisRef"].startswith("Acts."):
             for k in ("people", "places"):

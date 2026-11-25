@@ -191,7 +191,7 @@ CREATE INDEX relations_obj ON relations(object);
 
 
 def build_core(src, out):
-    lock = json.loads((ROOT / "sources.lock.json").read_text())
+    lock = json.loads((ROOT / "sources.lock.json").read_text(encoding="utf-8"))
     kjv = load_kjv(src)
     tip = parse_tipnr(src)
     geo = load_openbible(src)
@@ -481,9 +481,9 @@ def content_hash(db):
 # ------------------------------------------------------- Theographic (share-alike)
 def build_theographic(src, core_path, out):
     th = src / "theographic/json"
-    people = {p["id"]: p["fields"] for p in json.loads((th / "people.json").read_text())}
-    places = {p["id"]: p["fields"] for p in json.loads((th / "places.json").read_text())}
-    verses = json.loads((th / "verses.json").read_text())
+    people = {p["id"]: p["fields"] for p in json.loads((th / "people.json").read_text(encoding="utf-8"))}
+    places = {p["id"]: p["fields"] for p in json.loads((th / "places.json").read_text(encoding="utf-8"))}
+    verses = json.loads((th / "verses.json").read_text(encoding="utf-8"))
     acts = [v["fields"] for v in verses if v["fields"]["osisRef"].startswith("Acts.")]
     theo_refs = defaultdict(set)  # theographic id -> Acts refs
     for v in acts:
@@ -561,7 +561,7 @@ def main():
     a = ap.parse_args()
     src, out = pathlib.Path(a.sources), pathlib.Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    lock = json.loads((ROOT / "sources.lock.json").read_text())
+    lock = json.loads((ROOT / "sources.lock.json").read_text(encoding="utf-8"))
     for name, spec in lock.items():
         if a.no_theographic and name == "theographic":
             continue
@@ -571,7 +571,7 @@ def main():
     core = out / "acts-core.sqlite"
     unmatched, dropped = build_core(src, core)
     (out / "build-report.json").write_text(json.dumps(
-        {"tipnr_refs_without_kjv_form": sorted(unmatched), "entities_not_named_in_kjv_acts": dropped}, indent=1) + "\n")
+        {"tipnr_refs_without_kjv_form": sorted(unmatched), "entities_not_named_in_kjv_acts": dropped}, indent=1) + "\n", encoding="utf-8")
     print(f"core: {core}  sha256 {sha256_file(core)}  ({len(unmatched)} TIPNR refs with no KJV surface form)")
     if not a.no_theographic:
         th = out / "acts-theographic.sqlite"

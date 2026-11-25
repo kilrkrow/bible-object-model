@@ -26,9 +26,12 @@ def fetch(name, spec, dest):
         d.mkdir(parents=True)
         git("init", "-q", cwd=d)
         git("remote", "add", "origin", spec["repo"], cwd=d)
+        # keep files byte-for-byte as pinned: Git for Windows would otherwise turn LF into CRLF and break the hashes
+        git("config", "core.autocrlf", "false", cwd=d)
+        git("config", "core.eol", "lf", cwd=d)
         if spec.get("sparse"):
             git("config", "core.sparseCheckout", "true", cwd=d)
-            (d / ".git" / "info" / "sparse-checkout").write_text("\n".join(spec["sparse"]) + "\n")
+            (d / ".git" / "info" / "sparse-checkout").write_text("\n".join(spec["sparse"]) + "\n", encoding="utf-8")
         git("fetch", "-q", "--depth", "1", "--filter=blob:none", "origin", spec["commit"], cwd=d)
         git("checkout", "-q", "FETCH_HEAD", cwd=d)
     bad = []
@@ -45,7 +48,7 @@ def main():
     ap.add_argument("--sources", default=str(ROOT / "sources"))
     a = ap.parse_args()
     dest = pathlib.Path(a.sources)
-    lock = json.loads((ROOT / "sources.lock.json").read_text())
+    lock = json.loads((ROOT / "sources.lock.json").read_text(encoding="utf-8"))
     bad = []
     for name, spec in lock.items():
         print(f"fetching {name} @ {spec['commit'][:10]}")

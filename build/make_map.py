@@ -22,7 +22,7 @@ def xy(lon, lat):
 
 
 def land_paths():
-    g = json.loads((ROOT / "sources/naturalearth/geojson/ne_50m_land.geojson").read_text())
+    g = json.loads((ROOT / "sources/naturalearth/geojson/ne_50m_land.geojson").read_text(encoding="utf-8"))
     out = []
     for f in g["features"]:
         geom = f["geometry"]
@@ -105,10 +105,10 @@ def main():
     j, gj = b.journey("paul"), b.journey_geojson("paul")
     out = ROOT / "dist/maps"
     out.mkdir(parents=True, exist_ok=True)
-    (out / "paul-journeys.geojson").write_text(json.dumps(gj, ensure_ascii=False, indent=1) + "\n")
-    (out / "paul-journeys.svg").write_text(svg(j))
+    (out / "paul-journeys.geojson").write_text(json.dumps(gj, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    (out / "paul-journeys.svg").write_text(svg(j), encoding="utf-8")
     (out / "paul-journeys.html").write_text(HTML.replace("__DATA__", json.dumps(gj, ensure_ascii=False))
-                                            .replace("__COLORS__", json.dumps(LEG_COLORS)))
+                                            .replace("__COLORS__", json.dumps(LEG_COLORS)), encoding="utf-8")
     print(f"maps: {out}")
 
 

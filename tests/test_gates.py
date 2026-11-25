@@ -143,7 +143,7 @@ def test_gate5_every_link_cites_a_verse(db):
 def test_gate5_random_sample_of_20_is_reviewed():
     sample = link_sample.draw()
     assert len(sample) == 20 and all(x["auto_ok"] for x in sample)
-    review = (ROOT / "reports/link-sample.md").read_text()
+    review = (ROOT / "reports/link-sample.md").read_text(encoding="utf-8")
     assert review.count("| correct |") == 20, "every sampled link needs a hand verdict in reports/link-sample.md"
     for x in sample:
         assert x["ref"] in review
@@ -282,8 +282,8 @@ def test_gate8_mcp_server_answers_sample_questions():
 
 # ----------------------------------------------------------- gate 9: attribution
 def test_gate9_attribution_names_every_source_and_license():
-    att = (ROOT / "ATTRIBUTION.md").read_text()
-    lock = json.loads((ROOT / "sources.lock.json").read_text())
+    att = (ROOT / "ATTRIBUTION.md").read_text(encoding="utf-8")
+    lock = json.loads((ROOT / "sources.lock.json").read_text(encoding="utf-8"))
     for name, spec in lock.items():
         assert spec["repo"] in att, name
         assert spec["commit"] in att, name
@@ -301,7 +301,7 @@ def test_gate10_vault_links_all_resolve():
     assert len(notes) > 200
     links = 0
     for p in notes.values():
-        for target in re.findall(r"\[\[([^\]|#]+)", p.read_text()):
+        for target in re.findall(r"\[\[([^\]|#]+)", p.read_text(encoding="utf-8")):
             links += 1
             assert target in notes, (p.name, target)
     assert links > 1000
@@ -309,7 +309,7 @@ def test_gate10_vault_links_all_resolve():
     lab = dict(db.execute("SELECT id, label FROM entities"))
     for eid in lab:  # every entity has a note
         assert any(n == lab[eid] or n.endswith(f"({eid})") for n in notes), eid
-    paul, antioch = notes[lab["paul"]].read_text(), notes[lab["antioch-of-syria"]].read_text()
+    paul, antioch = notes[lab["paul"]].read_text(encoding="utf-8"), notes[lab["antioch-of-syria"]].read_text(encoding="utf-8")
     assert f"[[{lab['antioch-of-syria']}]]" in paul and f"[[{lab['barnabas']}]]" in paul
     assert f"[[{lab['paul']}]]" in antioch and f"[[{lab['barnabas']}]]" in antioch
     assert (vault / ".obsidian/graph.json").exists()
