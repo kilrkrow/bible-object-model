@@ -28,7 +28,10 @@ recipients of Paul's letters); Greek and speakers for Acts and John.
 
 ## Run it on Windows (no WSL)
 
-Everything is plain Python and SQLite, so it runs natively.
+Everything is plain Python and SQLite, so it runs natively. The step-by-step guide is
+[docs/build-on-windows.md](docs/build-on-windows.md); in short, after cloning, run
+`powershell -ExecutionPolicy Bypass -File .\build.ps1`, which sets up its own Python environment, builds and tests.
+Or by hand:
 
 1. Install Python 3.10 or newer from python.org (tick "Add python.exe to PATH"), and Git for Windows.
 2. In PowerShell, in this folder:

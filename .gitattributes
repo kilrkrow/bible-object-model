@@ -1,0 +1,5 @@
+# Keep line endings LF on every platform, so the build is identical on Windows.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.png binary
+*.sqlite binary
